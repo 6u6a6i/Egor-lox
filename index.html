@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Escape from Tarkov — фан-сайт</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap');
+
+        :root {
+            --gold: #d3a84c;
+            --gold-light: #f2cc74;
+            --dark: #0c0f0e;
+            --panel: rgba(25, 29, 27, 0.94);
+            --gray: #9da39e;
+            --red: #a94335;
+            --green: #729b64;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            color: #f1f1f1;
+            font-family: "Roboto", Arial, sans-serif;
+            background:
+                linear-gradient(rgba(5, 8, 7, 0.82), rgba(5, 8, 7, 0.95)),
+                url("https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=2000&q=85")
+                center / cover fixed;
+        }
+
+        body::before {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            content: "";
+            opacity: 0.12;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 35px 35px;
+        }
+
+        header {
+            position: relative;
+            min-height: 430px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 50px 20px;
+            overflow: hidden;
+            background:
+                linear-gradient(90deg, rgba(9, 13, 12, 0.95), rgba(9, 13, 12, 0.45)),
+                url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=2000&q=85")
+                center / cover;
+            border-bottom: 4px solid var(--gold);
+        }
+
+        header::after {
+            position: absolute;
+            right: 6%;
+            bottom: 25px;
+            color: rgba(255,255,255,0.1);
+            font-family: "Oswald", sans-serif;
+            font-size: 95px;
+            font-weight: bold;
+            content: "TARKOV";
+            letter-spacing: 10px;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .eyebrow {
+            margin-bottom: 15px;
+            color: var(--gold-light);
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: "Oswald", Arial, sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 0;
+            color: #fff;
+            font-size: clamp(42px, 8vw, 86px);
+            line-height: 0.95;
+            text-shadow: 4px 4px 0 #000;
+        }
+
+        .subtitle {
+            margin: 25px auto 0;
+            max-width: 650px;
+            color: #d3d6d1;
+            font-size: 19px;
+            line-height: 1.6;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(10, 13, 12, 0.96);
+            border-bottom: 1px solid #4b504a;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.45);
+        }
+
+        nav button,
+        .main-button {
+            padding: 13px 24px;
+            color: #fff;
+            font-family: "Oswald", Arial, sans-serif;
+            font-size: 16px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: #303733;
+            border: 1px solid var(--gold);
+            border-radius: 3px;
+            transition: 0.25s ease;
+        }
+
+        nav button:hover,
+        .main-button:hover {
+            color: #151815;
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 18px rgba(211, 168, 76, 0.25);
+        }
+
+        main {
+            width: min(1120px, 92%);
+            margin: 38px auto 70px;
+        }
+
+        .intro-card,
+        .content-section {
+            background: var(--panel);
+            border: 1px solid #484e48;
+            border-radius: 5px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .intro-card {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 28px;
+            align-items: center;
+            padding: 30px;
+            border-left: 5px solid var(--gold);
+        }
+
+        .intro-card h2 {
+            margin-top: 0;
+            color: var(--gold-light);
+            font-size: 32px;
+        }
+
+        .intro-card p,
+        .content-section p,
+        .content-section li {
+            color: #d1d5d0;
+            line-height: 1.75;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .tag {
+            padding: 7px 11px;
+            color: #c8cfc8;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            background: #252b27;
+            border: 1px solid #586158;
+            border-radius: 2px;
+        }
+
+        .intro-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border: 2px solid #747b70;
+            border-radius: 3px;
+            filter: saturate(0.75) contrast(1.1);
+        }
+
+        .content-section {
+            display: none;
+            margin-top: 28px;
+            padding: 30px;
+            border-top: 3px solid var(--gold);
+        }
+
+        .content-section.active {
+            display: block;
+            animation: appear 0.35s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-section h2 {
+            margin-top: 0;
+            color: var(--gold-light);
+            font-size: 30px;
+        }
+
+        .content-section h3 {
+            color: #e5bd64;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .info-box {
+            padding: 18px;
+            background: #272d29;
+            border: 1px solid #485148;
+            border-radius: 3px;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--gold-light);
+            font-family: "Oswald", sans-serif;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            overflow: hidden;
+            background: #000;
+            border: 1px solid #626a60;
+            border-radius: 3px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Мини-игра */
+        .game-intro {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .game-intro p {
+            margin: 0;
+        }
+
+        .stats {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            min-width: 115px;
+            padding: 12px;
+            text-align: center;
+            background: #202620;
+            border: 1px solid #596158;
+            border-radius: 3px;
+        }
+
+        .stat-label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--gray);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            color: var(--gold-light);
+            font-family: "Oswald", sans-serif;
+            font-size: 25px;
+        }
+
+        #raid-area {
+            position: relative;
+            height: 420px;
+            overflow: hidden;
+            background:
+                linear-gradient(rgba(19, 25, 21, 0.65), rgba(19, 25, 21, 0.8)),
+                url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1500&q=80")
+                center / cover;
+            border: 2px solid #687062;
+            border-radius: 4px;
+        }
+
+        #raid-area::before {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            content: "";
+            opacity: 0.2;
+            background-image:
+                linear-gradient(90deg, #fff 1px, transparent 1px),
+                linear-gradient(#fff 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        .loot-item {
+            position: absolute;
+            z-index: 2;
+            width: 92px;
+            min-height: 72px;
+            padding: 8px 5px;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(26, 31, 27, 0.95);
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.6);
+            animation: lootPulse 1.7s infinite alternate;
+        }
+
+        .loot-item:hover {
+            background: #4e472a;
+            transform: scale(1.08);
+        }
+
+        .loot-icon {
+            display: block;
+            margin-bottom: 3px;
+            font-size: 27px;
+        }
+
+        @keyframes lootPulse {
+            from {
+                box-shadow: 0 0 3px rgba(211, 168, 76, 0.25);
+            }
+
+            to {
+                box-shadow: 0 0 18px rgba(211, 168, 76, 0.75);
+            }
+        }
+
+        .game-message {
+            min-height: 25px;
+            margin: 15px 0 0;
+            color: var(--gold-light);
+            font-weight: bold;
+        }
+
+        .start-button {
+            margin: 20px 0 0;
+            color: #161a16;
+            background: var(--gold);
+            border: 0;
+        }
+
+        .start-button:hover {
+            background: var(--gold-light);
+        }
+
+        .quiz-question {
+            margin: 18px 0;
+            padding: 18px;
+            background: #252c27;
+            border-left: 3px solid var(--gold);
+            border-radius: 3px;
+        }
+
+        .quiz-question p {
+            margin-top: 0;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .quiz-question label {
+            display: block;
+            margin: 10px 0;
+            color: #cbd0cb;
+            cursor: pointer;
+        }
+
+        .quiz-question label:hover {
+            color: var(--gold-light);
+        }
+
+        .quiz-button {
+            margin-top: 8px;
+            color: #161a16;
+            background: var(--gold);
+        }
+
+        #result {
+            margin-top: 20px;
+            color: var(--gold-light);
+            font-family: "Oswald", sans-serif;
+            font-size: 23px;
+        }
+
+        footer {
+            padding: 28px 20px;
+            color: #929991;
+            text-align: center;
+            background: #0b0e0d;
+            border-top: 1px solid #454b45;
+        }
+
+        @media (max-width: 800px) {
+            .intro-card {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header::after {
+                font-size: 50px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            nav button {
+                width: 100%;
+            }
+
+            main {
+                width: 94%;
+            }
+
+            .intro-card,
+            .content-section {
+                padding: 20px;
+            }
+
+            #raid-area {
+                height: 360px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="eyebrow">Norvinsk region // secure zone</div>
+            <h1>Escape from Tarkov</h1>
+            <p class="subtitle">
+                Выживи в рейде, найди ценный лут и доберись до точки эвакуации.
+            </p>
+        </div>
+    </header>
+
+    <nav>
+        <button onclick="showSection('author')">Об авторе</button>
+        <button onclick="showSection('quiz')">Викторина</button>
+        <button onclick="showSection('game')">Об игре</button>
+        <button onclick="showSection('minigame')">Мини-игра</button>
+    </nav>
+
+    <main>
+        <section class="intro-card">
+            <div>
+                <div class="eyebrow">Tactical extraction experience</div>
+                <h2>Добро пожаловать в Тарков</h2>
+
+                <p>
+                    Исследуй заброшенные районы, собирай полезные предметы,
+                    следи за временем и не забывай о главном — эвакуации.
+                </p>
+
+                <div class="tag-list">
+                    <span class="tag">Hardcore</span>
+                    <span class="tag">Loot</span>
+                    <span class="tag">Raid</span>
+                    <span class="tag">Extraction</span>
+                </div>
+            </div>
+
+            <img
+                class="intro-image"
+                src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?auto=format&fit=crop&w=1000&q=85"
+                alt="Атмосферное изображение для сайта"
+            >
+        </section>
+
+        <!-- Раздел «Об авторе» -->
+        <section id="author" class="content-section">
+            <h2>Об авторе</h2>
+
+            <p>
+                Автор сайта: <strong>Имя Фамилия</strong>.
+            </p>
+
+            <p>
+                Этот фанатский сайт создан в учебных целях с использованием
+                HTML, CSS и JavaScript. В проекте представлены информация об игре,
+                викторина и небольшая интерактивная мини-игра.
+            </p>
+        </section>
+
+        <!-- Раздел «Об игре» -->
+        <section id="game" class="content-section">
+            <h2>Об игре</h2>
+
+            <p>
+                Escape from Tarkov — хардкорный тактический шутер,
+                в котором игрок отправляется в рейд, ищет оружие, медикаменты,
+                броню и другие предметы, а затем пытается покинуть локацию.
+            </p>
+
+            <div class="info-grid">
+                <div class="info-box">
+                    <strong>Рейды</strong>
+                    Подготовь снаряжение и отправляйся на опасную локацию.
+                </div>
+
+                <div class="info-box">
+                    <strong>Добыча</strong>
+                    Собирай предметы и решай, что стоит взять с собой.
+                </div>
+
+                <div class="info-box">
+                    <strong>Эвакуация</strong>
+                    Найди выход и сохрани добытое после рейда.
+                </div>
+            </div>
+
+            <h3>Видео по игре</h3>
+
+            <div class="video-container">
+                <iframe
+                    src="https://www.youtube.com/embed/IPlnHe9l34E"
+                    title="Официальный трейлер Escape from Tarkov"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+
+        <!-- Раздел «Викторина» -->
+        <section id="quiz" class="content-section">
+            <h2>Викторина</h2>
+
+            <div class="quiz-question">
+                <p>1. Что обычно нужно сделать после поиска добычи?</p>
+
+                <label>
+                    <input type="radio" name="q1" value="a">
+                    Найти точку эвакуации
+                </label>
+
+                <label>
+                    <input type="radio" name="q1" value="b">
+                    Построить дом
+                </label>
+
+                <label>
+                    <input type="radio" name="q1" value="c">
+                    Продать всю карту
+                </label>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. Как называется город, в котором происходит действие игры?</p>
+
+                <label>
+                    <input type="radio" name="q2" value="a">
+                    Тарков
+                </label>
+
+                <label>
+                    <input type="radio" name="q2" value="b">
+                    Москва
+                </label>
+
+                <label>
+                    <input type="radio" name="q2" value="c">
+                    Норильск
+                </label>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. Что можно найти во время рейда?</p>
+
+                <label>
+                    <input type="radio" name="q3" value="a">
+                    Оружие и медикаменты
+                </label>
+
+                <label>
+                    <input type="radio" name="q3" value="b">
+                    Только автомобили
+                </label>
+
+                <label>
+                    <input type="radio" name="q3" value="c">
+                    Только одежду
+                </label>
+            </div>
+
+            <button class="main-button quiz-button" onclick="checkQuiz()">
+                Проверить ответы
+            </button>
+
+            <div id="result"></div>
+        </section>
+
+        <!-- Раздел мини-игры -->
+        <section id="minigame" class="content-section">
+            <h2>Мини-игра: рейд за добычей</h2>
+
+            <div class="game-intro">
+                <p>
+                    Нажимай на предметы, чтобы собрать добычу.
+                    У тебя есть 30 секунд. Чем ценнее предмет, тем больше очков.
+                </p>
+
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-label">Время</span>
+                        <span class="stat-value" id="time">30</span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-label">Очки</span>
+                        <span class="stat-value" id="score">0</span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-label">Предметы</span>
+                        <span class="stat-value" id="items">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="main-button start-button" onclick="startRaid()">
+                Начать рейд
+            </button>
+
+            <div id="raid-area">
+                <div id="game-message" class="game-message">
+                    Нажми «Начать рейд», чтобы отправиться на локацию.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 Учебный фан-сайт Escape from Tarkov</p>
+        <p>Проект не является официальным сайтом игры.</p>
+    </footer>
+
+    <script>
+        const sections = document.querySelectorAll(".content-section");
+
+        function showSection(sectionId) {
+            sections.forEach(section => {
+                section.classList.remove("active");
+            });
+
+            const selectedSection = document.getElementById(sectionId);
+            selectedSection.classList.add("active");
+
+            selectedSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+
+        function checkQuiz() {
+            let score = 0;
+
+            const answer1 = document.querySelector('input[name="q1"]:checked');
+            const answer2 = document.querySelector('input[name="q2"]:checked');
+            const answer3 = document.querySelector('input[name="q3"]:checked');
+
+            if (answer1 && answer1.value === "a") {
+                score++;
+            }
+
+            if (answer2 && answer2.value === "a") {
+                score++;
+            }
+
+            if (answer3 && answer3.value === "a") {
+                score++;
+            }
+
+            const result = document.getElementById("result");
+
+            if (score === 3) {
+                result.textContent = "Отличный результат: 3 из 3!";
+            } else if (score === 2) {
+                result.textContent = "Хороший результат: 2 из 3.";
+            } else if (score === 1) {
+                result.textContent = "Правильный ответ только один: 1 из 3.";
+            } else {
+                result.textContent = "Попробуй ещё раз: 0 из 3.";
+            }
+        }
+
+        const loot = [
+            { name: "Медсумка", icon: "🩹", points: 20 },
+            { name: "Графический процессор", icon: "💾", points: 50 },
+            { name: "Бутылка воды", icon: "🧴", points: 10 },
+            { name: "Золотой зажигатель", icon: "🔥", points: 35 },
+            { name: "Рация", icon: "📻", points: 25 },
+            { name: "Патроны", icon: "🔸", points: 15 },
+            { name: "Ключ", icon: "🔑", points: 30 },
+            { name: "Военный аккумулятор", icon: "🔋", points: 45 }
+        ];
+
+        let score = 0;
+        let collectedItems = 0;
+        let timeLeft = 30;
+        let timer = null;
+        let spawnTimer = null;
+        let raidIsActive = false;
+
+        function startRaid() {
+            clearInterval(timer);
+            clearInterval(spawnTimer);
+
+            score = 0;
+            collectedItems = 0;
+            timeLeft = 30;
+            raidIsActive = true;
+
+            document.getElementById("score").textContent = score;
+            document.getElementById("items").textContent = collectedItems;
+            document.getElementById("time").textContent = timeLeft;
+            document.getElementById("game-message").textContent =
+                "Рейд начался! Собирай предметы и следи за временем.";
+
+            document.querySelectorAll(".loot-item").forEach(item => {
+                item.remove();
+            });
+
+            spawnLoot();
+
+            spawnTimer = setInterval(spawnLoot, 850);
+
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById("time").textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    finishRaid();
+                }
+            }, 1000);
+        }
+
+        function spawnLoot() {
+            if (!raidIsActive) {
+                return;
+            }
+
+            const area = document.getElementById("raid-area");
+            const item = loot[Math.floor(Math.random() * loot.length)];
+            const lootElement = document.createElement("button");
+
+            lootElement.className = "loot-item";
+            lootElement.innerHTML = `
+                <span class="loot-icon">${item.icon}</span>
+                ${item.name}
+                <br>
+                <small>+${item.points} очков</small>
+            `;
+
+            const maxX = area.clientWidth - 105;
+            const maxY = area.clientHeight - 95;
+
+            lootElement.style.left = Math.max(5, Math.random() * maxX) + "px";
+            lootElement.style.top = Math.max(45, Math.random() * maxY) + "px";
+
+            lootElement.addEventListener("click", () => {
+                score += item.points;
+                collectedItems++;
+
+                document.getElementById("score").textContent = score;
+                document.getElementById("items").textContent = collectedItems;
+
+                lootElement.remove();
+            });
+
+            area.appendChild(lootElement);
+
+            setTimeout(() => {
+                if (lootElement.isConnected) {
+                    lootElement.remove();
+                }
+            }, 2500);
+        }
+
+        function finishRaid() {
+            raidIsActive = false;
+
+            clearInterval(timer);
+            clearInterval(spawnTimer);
+
+            document.querySelectorAll(".loot-item").forEach(item => {
+                item.remove();
+            });
+
+            document.getElementById("game-message").textContent =
+                `Рейд завершён! Ты собрал ${collectedItems} предметов и получил ${score} очков.`;
+        }
+    </script>
+
+</body>
+</html>
